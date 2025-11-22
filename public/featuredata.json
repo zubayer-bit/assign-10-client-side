@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Create Eco-Friendly Events",
+    "desc": "Organize meaningful social and environmental events such as tree plantation, cleanups, donations and more.",
+    "icon": "leaf"
+  },
+  {
+    "id": 2,
+    "title": "Join Community Activities",
+    "desc": "Participate in local events and contribute to building a greener and healthier community.",
+    "icon": "users"
+  },
+  {
+    "id": 3,
+    "title": "Track Your Participation",
+    "desc": "Keep a record of all the events you join and monitor your contribution towards social development.",
+    "icon": "calendarCheck"
+  }
+]
