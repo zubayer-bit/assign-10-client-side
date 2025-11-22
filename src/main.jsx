@@ -14,6 +14,7 @@ import AboutCard from "./Components/AboutCard/AboutCard.jsx";
 import CreateEvent from "./Components/CreateEvent/CreateEvent.jsx";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.jsx";
 import UpcomingEvents from "./Components/UpcomingEvents/UpcomingEvents.jsx";
+import EventDetails from "./Components/EventDetails/EventDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,15 +37,20 @@ const router = createBrowserRouter([
       { path: "/register", element: <Registration></Registration> },
       { path: "/about", element: <AboutCard></AboutCard> },
 
-
       {
         path: "/createEvents",
-        element: <PrivateRoute><CreateEvent></CreateEvent></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <CreateEvent></CreateEvent>
+          </PrivateRoute>
+        ),
       },
 
       // create event page
-      {path: '/upcoming-events', element: <UpcomingEvents></UpcomingEvents>}
+      { path: "/upcoming-events", element: <UpcomingEvents></UpcomingEvents> },
 
+      //events details page:
+      { path: "/eventsDetails/:id", element: <EventDetails></EventDetails> },
     ],
   },
 ]);

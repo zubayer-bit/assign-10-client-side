@@ -91,7 +91,7 @@ const UpcomingEvents = () => {
                 </p>
 
                 <div className="card-actions justify-end mt-4 ">
-                  <Link to={`/events/${event._id}`}>
+                  <Link to={`/eventsDetails/${event._id}`}>
 
                <motion.button
   initial={{ opacity: 0, y: 8 }}
