@@ -15,6 +15,9 @@ import CreateEvent from "./Components/CreateEvent/CreateEvent.jsx";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.jsx";
 import UpcomingEvents from "./Components/UpcomingEvents/UpcomingEvents.jsx";
 import EventDetails from "./Components/EventDetails/EventDetails.jsx";
+import JoinedEvents from "./Components/JoinedEvents/JoinedEvents.jsx";
+import MyEvents from "./Components/MyEvents/MyEvents.jsx";
+import UpdateEvent from "./Components/UpdateEvent/UpdateEvent.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +54,36 @@ const router = createBrowserRouter([
 
       //events details page:
       { path: "/eventsDetails/:id", element: <EventDetails></EventDetails> },
+
+      //joined event page:
+      {
+        path: "/joined-events-page",
+        element: (
+          <PrivateRoute>
+            <JoinedEvents></JoinedEvents>
+          </PrivateRoute>
+        ),
+      },
+
+      //only login-user ar personal-joined events show hobe ai component aa:
+      {
+        path: "/user-manage-events",
+        element: (
+          <PrivateRoute>
+            <MyEvents></MyEvents>
+          </PrivateRoute>
+        ),
+      },
+
+      //manage page aa  "update-event" button a click korle ai component a jabe:
+      {
+        path: "/update-event/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateEvent></UpdateEvent>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);

@@ -12,36 +12,34 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Request interceptor
     const requestInterceptor = instance.interceptors.request.use((config) => {
       console.log(config);
-      const token = user?.accessToken; // safer: optional chaining
+      const token = user?.accessToken;
       if (token) {
         config.headers.authorization = `Bearer ${token}`;
       }
       return config;
     });
 
-    // Response interceptor (added new features)
     const responseInterceptor = instance.interceptors.response.use(
       (res) => res,
       (err) => {
         console.log(err);
-        const status = err.response?.status; // safer: use err.response
+        const status = err.response?.status;
         if (status === 401 || status === 403) {
           console.log("log out the user for the bad request");
           logOut().then(() => {
             navigate("/register");
           });
         }
-        return Promise.reject(err); // NEW: forward the error to calling code
+        return Promise.reject(err); // forward the error to calling code........
       }
     );
 
-    // Cleanup interceptors on unmount
+    // interceptors  deactivate hobe kaj ses hole
     return () => {
       instance.interceptors.request.eject(requestInterceptor);
-      instance.interceptors.response.eject(responseInterceptor); // NEW: remove response interceptor
+      instance.interceptors.response.eject(responseInterceptor);
     };
   }, [user, logOut, navigate]);
 

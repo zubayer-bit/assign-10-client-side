@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { SiEpicgames } from "react-icons/si";
 import { FaBars, FaTimes } from "react-icons/fa";
 // import { NavLink } from "react-router-dom";
@@ -12,6 +12,17 @@ const Navbar = () => {
   const { user, logOut, loading } = use(AuthContext);
   const [open, setOpen] = useState(false);
 
+  //----------------token get: (start)
+  // const { user } = useAuth();
+
+  // useEffect(() => {
+  //   if (user) {
+  //     user.getIdToken().then(token => {
+  //       // console.log("Firebase Token:", token);
+  //     });
+  //   }
+  // }, [user]);
+//----------------token get: (end)
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -109,8 +120,8 @@ const Navbar = () => {
     className="menu menu-sm dropdown-content p-2 z-[1] shadow bg-white rounded-box w-52"
   >
     <li><NavLink to="/createEvents">Create Event</NavLink></li>
-    <li><NavLink to="/manage-events">Manage Events</NavLink></li>
-    <li><NavLink to="/joined-events">Joined Events</NavLink></li>
+    <li><NavLink to="/user-manage-events">Manage Events</NavLink></li>
+    <li><NavLink to="/joined-events-page">Joined Events</NavLink></li>
   </ul>
 
 </div>
@@ -178,8 +189,8 @@ font-semibold text-white">
             <>
               {/* Mobile Dropdown ----------------*/}
               <NavLink to="/create-event">Create Event</NavLink>
-              <NavLink to="/manage-events">Manage Events</NavLink>
-              <NavLink to="/joined-events">Joined Events</NavLink>
+              <NavLink to="/user-manage-events">Manage Events</NavLink>
+              <NavLink to="/joined-events-page">Joined Events</NavLink>
 
               <motion.button
                 onClick={handleLogOut}
