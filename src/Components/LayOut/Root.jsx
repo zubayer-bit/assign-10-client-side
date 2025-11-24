@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react';
-import Navbar from '../Navbar/Navbar';
-import { Outlet, useMatches, useNavigation } from 'react-router';
-import Footer from '../Footer/Footer';
+import React, { useEffect } from "react";
+import Navbar from "../Navbar/Navbar";
+import { Outlet, useMatches, useNavigation } from "react-router";
+import Footer from "../Footer/Footer";
 
 const Root = () => {
   const matches = useMatches();
   const navigation = useNavigation();
 
-  // Derive loading state directly
-  const showLoading = navigation.state === 'loading';
+  const showLoading = navigation.state === "loading";
 
-  // Tab title logic
+  // Tab title
   useEffect(() => {
     const lastMatch = matches.at(-1);
     const routeTitle = lastMatch?.handle?.title;
-    document.title = routeTitle || '';
+    document.title = routeTitle || "";
   }, [matches]);
 
   return (

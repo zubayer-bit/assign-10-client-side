@@ -32,7 +32,7 @@ const useAxiosSecure = () => {
             navigate("/register");
           });
         }
-        return Promise.reject(err); // forward the error to calling code........
+        return Promise.reject(err); // forward the error ----->to calling code........
       }
     );
 
