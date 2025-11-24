@@ -113,7 +113,7 @@ const Registration = () => {
       className="
         hero min-h-screen px-4
         
-        transition-colors duration-300
+        transition-colors  duration-300
       "
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
