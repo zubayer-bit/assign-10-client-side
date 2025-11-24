@@ -1,8 +1,8 @@
 # Tree Plantation Website
 
-Welcome to the Tree Plantation project! 🌳 This website is dedicated to promoting tree planting initiatives and environmental awareness.
+Welcome to the Tree Plantation project!. This website is dedicated to promoting tree planting initiatives and environmental awareness.
 
-**Live Site:** [Your Live Site URL Here](https://your-live-site-url.com)
+**Live Site:**(https://tree-plantation-36d66.web.app)
 
 ## Technologies Used
 
