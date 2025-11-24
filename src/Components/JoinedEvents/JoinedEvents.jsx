@@ -4,30 +4,27 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { motion } from "framer-motion";
 
 const JoinedEvents = () => {
-  // //data receive from "useAuth"
   const { user } = useAuth();
-  //import kora nilam...."useAxiosSecurity"
-  const axiosSecurity = useAxiosSecure();
-
+  const axiosSecure = useAxiosSecure();
   const [joinedEvents, setJoinedEvents] = useState([]);
 
-  //akhn user ar joined event ar data gulu "get" korbo:
   useEffect(() => {
-    axiosSecurity.get(`/joinedDataGet?email=${user.email}`).then((data) => {
+    axiosSecure.get(`/joinedDataGet?email=${user.email}`).then((data) => {
       setJoinedEvents(data.data);
     });
-  }, [axiosSecurity, user.email]);
+  }, [axiosSecure, user.email]);
 
   if (joinedEvents.length === 0) {
     return (
-      <div className="text-center py-20 text-xl font-semibold">
+      <div className="text-center py-20 text-xl font-semibold text-gray-700 dark:text-gray-300">
         You haven't joined any events yet.
       </div>
     );
   }
+
   return (
-    <div className="max-w-[1160px] mx-auto px-5 py-10">
-      <h1 className="text-3xl font-bold mb-8 text-center">
+    <div className="max-w-[1160px] mx-auto px-5 py-10 text-gray-800 dark:text-gray-200">
+      <h1 className="text-3xl font-bold mb-8 text-center text-green-700 dark:text-green-400">
         Your Joined Events
       </h1>
 
@@ -38,7 +35,13 @@ const JoinedEvents = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="card bg-base-100 shadow-xl border rounded-xl overflow-hidden"
+            className="
+              card 
+              bg-white dark:bg-gray-900 
+              shadow-xl border 
+              border-gray-200 dark:border-gray-700 
+              rounded-xl overflow-hidden
+            "
           >
             <figure className="h-48">
               <img
@@ -49,12 +52,15 @@ const JoinedEvents = () => {
             </figure>
 
             <div className="card-body">
-              <h2 className="card-title">{event.title}</h2>
-              <p className="text-gray-600 text-sm">
+              <h2 className="card-title text-gray-900 dark:text-gray-100">
+                {event.title}
+              </h2>
+
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
                 {event.description?.slice(0, 80)}...
               </p>
 
-              <div className="mt-3 space-y-1 text-gray-700 text-sm">
+              <div className="mt-3 space-y-1 text-gray-700 dark:text-gray-300 text-sm">
                 <p>
                   <span className="font-semibold">Location:</span>{" "}
                   {event.location}
@@ -69,6 +75,7 @@ const JoinedEvents = () => {
                 </p>
               </div>
 
+              {/* Future details button (optional)
               <div className="card-actions justify-end mt-4">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
@@ -77,7 +84,7 @@ const JoinedEvents = () => {
                 >
                   View Details
                 </motion.button>
-              </div>
+              </div> */}
             </div>
           </motion.div>
         ))}

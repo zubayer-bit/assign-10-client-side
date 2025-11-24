@@ -1,147 +1,120 @@
-import React, { use, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../../Firebase/firebase.config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 
 const Registration = () => {
-  //using  useNavigate hook to navigate after registration:
-  
   const navigate = useNavigate();
 
-  //receive data from authProvider register function:
-  const {registerUser,setUser, googleLogin, emailVarification, logOut,updateUserProfile} = use(AuthContext);
+  const {
+    registerUser,
+    setUser,
+    googleLogin,
+    emailVarification,
+    logOut,
+    updateUserProfile,
+  } = useContext(AuthContext);
 
-  //error set for password validation
-  const [error, setError] = useState('');
-  //step:1 ("success" notification dekhanor code...)..declare state...
-  //akdm first aa...success hoa nai,....tai by default "false" thakbe...then jokhon data pabe mane success hoa ce...tai tokhon "true" hobe...
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  //data receive handler for registration
-  const handlerRegistration = (event) =>{
+  const handlerRegistration = (event) => {
     event.preventDefault();
-    // console.log(event.target); //out:<form class="card-body">…</form>flex
+
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
     const photo = form.photo.value;
-    // console.log(name,email,photo ,password);  //out: FocusTask maishsssmubsdassir89@gmail.com https://i.ibb.co.com/qYzC8gwM/FitBuddy.jpg aAdfdfdffefefe
 
-    //name validation:
-    if(name.length < 3){
-      setError('Name must be at least 3 characters long.');
+    // Name validation
+    if (name.length < 3) {
+      setError("Name must be at least 3 characters long.");
       return;
     }
 
-    //email validation:
+    // Email validation
     const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!emailCheck.test(email)){
-      setError('Please provide a valid email address.');
+    if (!emailCheck.test(email)) {
+      setError("Please provide a valid email address.");
       return;
     }
-    //photo URL validation:
+
+    // URL validation
     const urlCheck = /^(ftp|http|https):\/\/[^ "]+$/;
-    if(!urlCheck.test(photo)){
-      setError('Please provide a valid URL for the photo.');
+    if (!urlCheck.test(photo)) {
+      setError("Please provide a valid URL for the photo.");
       return;
     }
-    //password validation:
+
+    // Password validation
     const passwordCheck = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
-    if(!passwordCheck.test(password)){
-      setError('Password must be at least 6 characters long and contain at least one uppercase and one lowercase letter.');
+    if (!passwordCheck.test(password)) {
+      setError(
+        "Password must be at least 6 characters and include uppercase & lowercase letters."
+      );
       return;
     }
-// -------------------------(start)-----------------------------------registration function call:
-    //register function from "authProvider" call here:
-    registerUser(email,password)
-    .then(result =>{
-      const registeredUser = result.user;
-      // console.log(registeredUser); //out: _UserImpl{providerId: 'firebase', proactiveRefresh: ProactiveRefresh, reloadUserInfo: {…}, reloadListener: null, uid: 'rrQJ38gFcwToMZVjBysoFb3EeMc2',…}
 
-      //--------------(start)-----------update user profile(name, photo) after registration:
-      updateUserProfile({
-        displayName: name,
-        photoURL: photo
-      }).then(() => {
-  // Profile updated!
-  setUser({...registeredUser, displayName: name,
-        photoURL: photo});
-}).catch((error) => {
-  // An error occurred
-  // console.log(error);
-  //jodi kono error hoa tahole ager user data gului set hoa jabe:
-  setUser(registeredUser);
-});
-//--------------(end)-----------update user profile(name, photo) after registration:
-      
+    // Registration function:
+    registerUser(email, password)
+      .then((result) => {
+        const registeredUser = result.user;
 
-      //--------------(start)-----------send varification email commande
-      emailVarification(registeredUser)
-      .then(() => {
-        logOut();
-            Swal.fire("Verification email sent! Please verify your email before login.");
+        // Update profile
+        updateUserProfile({
+          displayName: name,
+          photoURL: photo,
+        })
+          .then(() => {
+            setUser({
+              ...registeredUser,
+              displayName: name,
+              photoURL: photo,
+            });
+          })
+          .catch(() => {
+            setUser(registeredUser);
+          });
 
-          return;
-        
+        // Verification email
+        emailVarification(registeredUser).then(() => {
+          logOut();
+          Swal.fire(
+            "Verification email sent! Please verify your email before login."
+          );
+        });
 
-        //   //-------------varify eamil before registration-----------(start)
-        //    if (!registeredUser.emailVerified) {
-        //     logOut(auth);
-        //   alert('Your email is not verified. Please verify your email.After verification you can login.');
-          
-        //   return;
-        // }
-        // //-------------varify eamil before registration-----------(end)
+        setSuccess(true);
+        setError("");
+        form.reset();
 
-
-        
-  });
-    //--------------(end)-----------send varification email commande
-
-      //step:2 set success true when registration success:
-      setSuccess(true);
-       setError("");
-      // //reset form after successfull registration:
-      form.reset();
-      navigate('/');
-    })
-    .catch(error =>{
-      // const errorCode = error.code;
-    const errorMessage = error.message;
-      setError(errorMessage);
-      setSuccess(false);
-    })
-    // -------------------------(end)-----------------------------------registration function call:
-
-    
-
-  }
-
-  //  //-------------(start)-----------google login button function:
-    const handleGoogleLogin = () =>{
-      googleLogin()
-      .then(result =>{
-        const loggedUser = result.user;
-        setUser(loggedUser);
-        // console.log(loggedUser);  //out:_UserImpl{providerId: 'firebase', proactiveRefresh: ProactiveRefresh, reloadUserInfo: {…}, reloadListener: null, uid: 'NZdZNTw0Zlf6xYzAw8UXd3vqCjy2',…}
-        navigate('/');
+        navigate("/");
       })
-      .catch(error =>{
-        const errorMessage = error.message;
-        // console.log(errorMessage);
+      .catch((error) => {
+        setError(error.message);
+        setSuccess(false);
+      });
+  };
+
+  // Google Login
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        setUser(result.user);
+        navigate("/");
       })
+      .catch(() => {});
+  };
 
-
-  }
-
-  //-------------(end)-----------google login button function:
   return (
     <motion.div
-      className="hero bg-base-200 min-h-screen px-4"
+      className="
+        hero min-h-screen px-4
+        
+        transition-colors duration-300
+      "
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -152,70 +125,108 @@ const Registration = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        {/* Text Section */}
+        {/* Left Section */}
         <div className="text-center lg:text-left max-w-md">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">
+          <h1 className="text-3xl md:text-5xl font-bold mb-3 text-gray-900 dark:text-green-400">
             Please Register!
           </h1>
-          <p className="text-gray-600 text-sm md:text-base">
-            Create your account to explore, play, and connect with gamers
-            worldwide.
+          <p className="text-gray-600 dark:text-green-500 font-semibold text-sm md:text-base">
+            Become a part of our plantation community and contribute to a
+            greener world.
           </p>
         </div>
 
-        {/* Form Section */}
+        {/* Form Card */}
         <motion.div
-          className="card bg-base-100 w-full max-w-sm shadow-2xl"
+          className="
+            card w-full max-w-sm shadow-2xl
+            bg-white dark:bg-gray-800
+            border border-gray-300 dark:border-gray-700
+            transition-all
+          "
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <form onSubmit={handlerRegistration} className="card-body">
-            <fieldset className="fieldset">
-              {/* Name input */}
-              <label className="label">Name</label>
+            <fieldset className="fieldset space-y-2">
+              {/* Name */}
+              <label className="label text-gray-800 dark:text-gray-200">
+                Name
+              </label>
               <input
-              required
+                required
                 name="name"
                 type="text"
-                className="input input-bordered w-full"
+                className="
+                  input input-bordered w-full
+                  bg-white dark:bg-gray-700
+                  text-gray-900 dark:text-gray-100
+                  border-gray-300 dark:border-gray-600
+                "
                 placeholder="Your name"
               />
 
-              {/* Email input */}
-              <label className="label">Email</label>
+              {/* Email */}
+              <label className="label text-gray-800 dark:text-gray-200">
+                Email
+              </label>
               <input
-              required
+                required
                 name="email"
                 type="email"
-                className="input input-bordered w-full"
+                className="
+                  input input-bordered w-full
+                  bg-white dark:bg-gray-700
+                  text-gray-900 dark:text-gray-100
+                  border-gray-300 dark:border-gray-600
+                "
                 placeholder="Email"
               />
+
               {/* Photo URL */}
-              <label className="label">Photo URL</label>
-                <input
-                required
-                  type="text"
-                  name="photo"
-                  className="input"
-                  placeholder="Photo URL"
-                />
-
-
-              {/* Password input */}
-              <label className="label">Password</label>
+              <label className="label text-gray-800 dark:text-gray-200">
+                Photo URL
+              </label>
               <input
-              required
+                required
+                type="text"
+                name="photo"
+                className="
+                  input input-bordered w-full
+                  bg-white dark:bg-gray-700
+                  text-gray-900 dark:text-gray-100
+                  border-gray-300 dark:border-gray-600
+                "
+                placeholder="Photo URL"
+              />
+
+              {/* Password */}
+              <label className="label text-gray-800 dark:text-gray-200">
+                Password
+              </label>
+              <input
+                required
                 name="password"
                 type="password"
-                className="input input-bordered w-full"
+                className="
+                  input input-bordered w-full
+                  bg-white dark:bg-gray-700
+                  text-gray-900 dark:text-gray-100
+                  border-gray-300 dark:border-gray-600
+                "
                 placeholder="Password"
               />
 
               {/* Register Button */}
               <motion.button
                 type="submit"
-                className="btn btn-neutral mt-4 w-full"
+                className="
+                  btn mt-4 w-full
+                  bg-gray-900 text-white
+                  dark:bg-green-600 dark:hover:bg-green-500
+                  hover:bg-gray-800
+                "
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -225,7 +236,12 @@ const Registration = () => {
               {/* Google Login */}
               <motion.button
                 onClick={handleGoogleLogin}
-                className="btn bg-white text-black border border-[#e5e5e5] mt-3 w-full flex items-center gap-2 justify-center"
+                className="
+                  btn mt-3 w-full flex items-center gap-2
+                  bg-white text-black
+                  dark:bg-gray-700 dark:text-white
+                  border border-gray-300 dark:border-gray-600
+                "
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -258,18 +274,22 @@ const Registration = () => {
                 Login with Google
               </motion.button>
             </fieldset>
-             {/* set error massage */}
-          {/* {error && <p className="text-teal-400">{error} </p>} */}
-          {error ? <p className="text-teal-400">{error} </p> : success && <p className="text-green-500">Registration Successful!</p>}
+
+            {/* Error / Success */}
+            {error ? (
+              <p className="text-red-500 mt-2">{error}</p>
+            ) : (
+              success && (
+                <p className="text-green-500 mt-2">Registration Successful!</p>
+              )
+            )}
           </form>
-         
 
-
-          {/* Footer Text */}
-          <p className="text-center mb-4 text-sm">
+          {/* Footer */}
+          <p className="text-center mb-4 text-sm text-gray-700 dark:text-gray-300">
             Already have an account?{" "}
             <Link
-              className="text-cyan-500 hover:text-green-400 underline"
+              className="text-cyan-500 dark:text-cyan-300 hover:text-green-500"
               to="/login"
             >
               Login

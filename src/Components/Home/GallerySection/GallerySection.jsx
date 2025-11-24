@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 
 const GallerySection = ({ imageTreePlant }) => {
   return (
-    <div className="py-20 bg-[#f0fdf4]">
+    <div className="py-20 bg-[#f0fdf4] dark:bg-gray-900">
       <div className="max-w-[1160px] mx-auto px-5 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-green-700 mb-12">
+        <h2 className="text-4xl md:text-5xl font-bold text-green-700 dark:text-green-400 mb-12">
           Event Gallery
         </h2>
 
@@ -13,7 +13,7 @@ const GallerySection = ({ imageTreePlant }) => {
             <motion.div
               key={item.id}
               whileHover={{ scale: 1.05 }}
-              className="overflow-hidden rounded-lg shadow-lg"
+              className="overflow-hidden rounded-lg shadow-lg dark:shadow-gray-700"
             >
               <img
                 src={item.image}

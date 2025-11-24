@@ -6,96 +6,61 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  //using useLOcation and useNavigate hook to navigate after login:
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
-  //receive data from authProvider login function:
+
   const { loginUser, googleLogin, logOut } = useContext(AuthContext);
 
-  //state for email input field
   const [email, setEmail] = useState("");
-  //error set for password validation
   const [error, setError] = useState("");
-  //step:1 ("success" notification dekhanor code...)..declare state...
-  //akdm first aa...success hoa nai,....tai by default "false" thakbe...then jokhon data pabe mane success hoa ce...tai tokhon "true" hobe...
   const [success, setSuccess] = useState(false);
-  //---------------(start)----------------handleLogin function:
+
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log({ email, password }); //out: {email: 'bangddlssadeshi@gmail.com', password: 'sdfsdfdf34fdA#'}
 
-    //--------(start)---------login function call from authProvider:
     loginUser(email, password)
       .then((result) => {
-        // Signed in
         const user = result.user;
 
-        //-------------varify eamil before login-----------(start)
         if (!user.emailVerified) {
-            Swal.fire("Your email is not verified. Please verify your email before login.");
+          Swal.fire(
+            "Your email is not verified. Please verify your email before login."
+          );
 
-       
           logOut(auth);
           return;
         }
 
-        //-------------varify eamil before login-----------(end)
-
-        //step:2 set success true when registration success:
         setSuccess(true);
         setError("");
-        // //reset form after successfull registration:
         form.reset();
-        console.log(user);
 
         navigate(location.state?.from?.pathname || location.state || "/");
       })
-      .catch((error) => {
-        // console.log(error);
-        // const errorCode = error.code;
-        const errorMessage = error.message;
+      .catch(() => {
         setError("Please provide valid email and password");
         setSuccess(false);
       });
-
-    //--------(end)---------login function call from authProvider:
   };
-  //---------------(end)----------------handleLogin function:
 
-  //-------------(start)-----------google login button function:
   const handleGoogleLogin = () => {
     googleLogin()
       .then((result) => {
-        const loggedUser = result.user;
-
-        console.log(loggedUser); //out:_UserImpl{providerId: 'firebase', proactiveRefresh: ProactiveRefresh, reloadUserInfo: {…}, reloadListener: null, uid: 'NZdZNTw0Zlf6xYzAw8UXd3vqCjy2',…}
-        // navigate(location.state || '/');
-
         navigate(location.state?.from?.pathname || location.state || "/");
       })
-      .catch((error) => {
-        const errorMessage = error.message;
-        // console.log(errorMessage);
-      });
+      .catch(() => {});
   };
 
-  //-------------(end)-----------google login button function:
-
-  //-------------(start)-----------handleForgotPassword function:
-//   const handleForgotPassword = () => {
-//     // if(!email){
-//     //   alert('Please provide your email address to reset your password.');
-//     //   return;
-//     // }
-//     navigate("/forget-password", { state: { email } });
-//   };
   return (
     <motion.div
-      className="hero bg-base-200 min-h-screen px-4"
+      className="
+        hero min-h-screen px-4
+        
+        transition-colors duration-300
+      "
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -106,60 +71,76 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        {/* Text Section */}
+        {/* Text */}
         <div className="text-center lg:text-left max-w-md">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">Please Login!</h1>
-          <p className="text-gray-600 text-sm md:text-base">
-            Access your account and explore the world of gaming.
+          <h1 className="text-3xl md:text-5xl font-bold mb-3 text-gray-900 dark:text-green-400">
+            Please Login!
+          </h1>
+          <p className="text-gray-600 dark:text-green-500 font-semibold text-sm md:text-base">
+            Access your account and join our plantation initiatives to create a
+            greener world.
           </p>
         </div>
 
-        {/* Form Section */}
+        {/* Card */}
         <motion.div
-          className="card bg-base-100 w-full max-w-sm shadow-2xl"
+          className="
+            card w-full max-w-sm shadow-2xl
+            bg-white dark:bg-gray-800
+            border border-gray-300 dark:border-gray-700
+            transition-all
+          "
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <form onSubmit={handleLogin} className="card-body">
-            <fieldset className="fieldset">
-              {/* Email input */}
-              <label className="label">Email</label>
+            <fieldset className="fieldset space-y-2">
+              {/* Email */}
+              <label className="label text-gray-800 dark:text-gray-200">
+                Email
+              </label>
               <input
                 required
                 type="email"
                 name="email"
                 onChange={(e) => setEmail(e.target.value)}
-                className="input input-bordered w-full"
                 value={email}
+                className="
+                  input input-bordered w-full
+                  bg-white dark:bg-gray-700
+                  text-gray-900 dark:text-gray-100
+                  border-gray-300 dark:border-gray-600
+                "
                 placeholder="Email"
               />
 
-              {/* Password input */}
-              <label className="label">Password</label>
+              {/* Password */}
+              <label className="label text-gray-800 dark:text-gray-200">
+                Password
+              </label>
               <input
                 required
                 type="password"
                 name="password"
-                className="input input-bordered w-full"
+                className="
+                  input input-bordered w-full
+                  bg-white dark:bg-gray-700
+                  text-gray-900 dark:text-gray-100
+                  border-gray-300 dark:border-gray-600
+                "
                 placeholder="Password"
               />
-
-              {/* Forgot Password */}
-              {/* <button
-                onClick={handleForgotPassword}
-                type="button"
-                className="text-left mt-2"
-              >
-                <a className="link link-hover text-sm text-cyan-600">
-                  Forgot password?
-                </a>
-              </button> */}
 
               {/* Login Button */}
               <motion.button
                 type="submit"
-                className="btn btn-neutral mt-4 w-full"
+                className="
+                  btn mt-4 w-full
+                  bg-gray-900 text-white
+                  dark:bg-green-600 dark:hover:bg-green-500
+                  hover:bg-gray-800
+                "
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -169,7 +150,13 @@ const Login = () => {
               {/* Google Login */}
               <motion.button
                 onClick={handleGoogleLogin}
-                className="btn bg-white text-black border border-[#e5e5e5] mt-3 w-full flex items-center justify-center gap-2"
+                type="button"
+                className="
+                  btn mt-3 w-full flex items-center gap-2
+                  bg-white text-black
+                  dark:bg-gray-700 dark:text-white
+                  border border-gray-300 dark:border-gray-600
+                "
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -203,19 +190,21 @@ const Login = () => {
               </motion.button>
             </fieldset>
 
-            {/* set ternary condition */}
+            {/* Error / Success */}
             {error ? (
-              <p className="text-teal-400">{error} </p>
+              <p className="text-red-500 mt-2">{error}</p>
             ) : (
-              success && <p className="text-green-500">Login Successful!</p>
+              success && (
+                <p className="text-green-500 mt-2">Login Successful!</p>
+              )
             )}
           </form>
 
           {/* Footer */}
-          <p className="text-center mb-4 text-sm">
+          <p className="text-center mb-4 text-sm text-gray-700 dark:text-gray-300">
             New to our website?{" "}
             <Link
-              className="text-cyan-500 hover:text-green-400 underline"
+              className="text-cyan-500 dark:text-cyan-300 hover:text-green-500"
               to="/register"
             >
               Register

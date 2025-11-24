@@ -10,16 +10,16 @@ const Newsletter = () => {
           transition={{ duration: 0.6 }}
         >
           <motion.fieldset
-            className="fieldset bg-base-200 border border-base-300 rounded-box p-6 md:p-10 text-center shadow-sm"
+            className="fieldset bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-box p-6 md:p-10 text-center shadow-sm"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h1 className="font-bold text-2xl md:text-3xl mb-2">
+            <h1 className="font-bold text-2xl md:text-3xl mb-2 text-gray-800 dark:text-gray-100">
               Subscribe to our Newsletter
             </h1>
 
-            <p className="text-sm md:text-base text-gray-700 mb-5 max-w-2xl mx-auto">
+            <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 mb-5 max-w-2xl mx-auto">
               Get the latest game updates and exclusive offers directly in your game mailbox!
             </p>
 
@@ -27,7 +27,7 @@ const Newsletter = () => {
               <input
                 type="email"
                 name="email"
-                className="input input-bordered w-full sm:join-item"
+                className="input input-bordered w-full sm:join-item bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
                 placeholder="Enter Your Email"
               />
 
