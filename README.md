@@ -1,16 +1,23 @@
-# React + Vite
+# Tree Plantation Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Tree Plantation project! 🌳 This website is dedicated to promoting tree planting initiatives and environmental awareness.
 
-Currently, two official plugins are available:
+**Live Site:** [Your Live Site URL Here](https://your-live-site-url.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
 
-## React Compiler
+- **React** – For building a dynamic, component-based UI.
+- **Tailwind CSS** – For utility-first styling and responsive design.
+- **DaisyUI** – Tailwind CSS component library for faster UI development.
+- **Firebase** – For authentication, database, and backend services.
+- **Framer Motion** – For smooth animations and transitions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🌱 **Event Management:** Users can create, view, and join tree plantation events.
+- 🌳 **User Authentication:** Secure login and registration system with email verification and Google login.
+- 📅 **Event Calendar:** Track upcoming plantation events with event details and dates.
+- 🖼 **Media Support:** Upload thumbnails and view images for each event.
+- 📊 **User Dashboard:** Manage your created events and see the events you have joined.
+- 🌐 **Responsive Design:** Works seamlessly on both desktop and mobile devices.
+- 🌓 **Dark/Light Mode Support:** Readable UI in both dark and light themes.
