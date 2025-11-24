@@ -10,7 +10,7 @@ export const AuthContext = createContext();
 export const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState();
-    console.log('Auth provider user:', user);
+    // console.log('Auth provider user:', user);
 
     //-----------------(start)-----------set loading jokhon user ar value thake na (reload dile)
     const [loading, setLoading] = useState(true);
