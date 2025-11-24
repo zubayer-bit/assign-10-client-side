@@ -66,13 +66,13 @@ const Login = () => {
       transition={{ duration: 0.6 }}
     >
       <motion.div
-        className="hero-content flex-col lg:flex-row-reverse gap-10"
+        className="hero-content  flex-col  lg:flex-row-reverse gap-10"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         {/* Text */}
-        <div className="text-center lg:text-left max-w-md">
+        <div className="text-center  lg:text-left max-w-md">
           <h1 className="text-3xl md:text-5xl font-bold mb-3 text-gray-900 dark:text-green-400">
             Please Login!
           </h1>
