@@ -19,6 +19,7 @@ import JoinedEvents from "./Components/JoinedEvents/JoinedEvents.jsx";
 import MyEvents from "./Components/MyEvents/MyEvents.jsx";
 import UpdateEvent from "./Components/UpdateEvent/UpdateEvent.jsx";
 import Error from "./Components/Error/Error.jsx";
+import PageLoad from "./Components/PageLoad/PageLoad.jsx";
 
 const delayLoader = () =>
   new Promise((resolve) => setTimeout(() => resolve(null), 300));
@@ -39,11 +40,30 @@ const router = createBrowserRouter([
           return { featureData, imageTreePlant };
         },
         Component: Home,
+        hydrateFallbackElement: <PageLoad></PageLoad>,
         handle: { title: "Home - Tree Plantation" },
       },
-      { path: "/login", element: <Login />, loader: delayLoader, handle: { title: "Login - Tree Plantation" } },
-      { path: "/register", element: <Registration />, loader: delayLoader, handle: { title: "Register - Tree Plantation" } },
-      { path: "/about", element: <AboutCard />, loader: delayLoader, handle: { title: "About - Tree Plantation" } },
+      {
+        path: "/login",
+        element: <Login />,
+        hydrateFallbackElement: <PageLoad></PageLoad>,
+        loader: delayLoader,
+        handle: { title: "Login - Tree Plantation" },
+      },
+      {
+        path: "/register",
+        element: <Registration />,
+        hydrateFallbackElement:<PageLoad></PageLoad>,
+        loader: delayLoader,
+        handle: { title: "Register - Tree Plantation" },
+      },
+      {
+        path: "/about",
+        element: <AboutCard />,
+        hydrateFallbackElement:<PageLoad></PageLoad>,
+        loader: delayLoader,
+        handle: { title: "About - Tree Plantation" },
+      },
 
       {
         path: "/createEvents",
@@ -52,13 +72,26 @@ const router = createBrowserRouter([
             <CreateEvent />
           </PrivateRoute>
         ),
+        hydrateFallbackElement:<PageLoad></PageLoad>,
         loader: delayLoader,
         handle: { title: "Create Event - Tree Plantation" },
       },
 
-      { path: "/upcoming-events", element: <UpcomingEvents />, loader: delayLoader, handle: { title: "Upcoming Events - Tree Plantation" } },
+      {
+        path: "/upcoming-events",
+        element: <UpcomingEvents />,
+        loader: delayLoader,
+        hydrateFallbackElement:<PageLoad></PageLoad>,
+        handle: { title: "Upcoming Events - Tree Plantation" },
+      },
 
-      { path: "/eventsDetails/:id", element: <EventDetails />, loader: delayLoader, handle: { title: "Event Details - Tree Plantation" } },
+      {
+        path: "/eventsDetails/:id",
+        element: <EventDetails />,
+        loader: delayLoader,
+        hydrateFallbackElement:<PageLoad></PageLoad>,
+        handle: { title: "Event Details - Tree Plantation" },
+      },
 
       {
         path: "/joined-events-page",
@@ -67,6 +100,7 @@ const router = createBrowserRouter([
             <JoinedEvents />
           </PrivateRoute>
         ),
+        hydrateFallbackElement:<PageLoad></PageLoad>,
         loader: delayLoader,
         handle: { title: "Joined Events - Tree Plantation" },
       },
@@ -78,6 +112,7 @@ const router = createBrowserRouter([
             <MyEvents />
           </PrivateRoute>
         ),
+        hydrateFallbackElement:<PageLoad></PageLoad>,
         loader: delayLoader,
         handle: { title: "My Events - Tree Plantation" },
       },
@@ -89,21 +124,29 @@ const router = createBrowserRouter([
             <UpdateEvent />
           </PrivateRoute>
         ),
+        hydrateFallbackElement:<PageLoad></PageLoad>,
         loader: delayLoader,
         handle: { title: "Update Event - Tree Plantation" },
       },
 
-      { path: "*", element: <Error />, loader: delayLoader, handle: { title: "404 - Page Not Found" } },
+      {
+        path: "*",
+        element: <Error />,
+        hydrateFallbackElement:<PageLoad></PageLoad>,
+        loader: delayLoader,
+        handle: { title: "404 - Page Not Found" },
+      },
     ],
   },
 ]);
 
-
-
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <RouterProvider
+        router={router}
+       
+      />
     </AuthProvider>
   </StrictMode>
 );
