@@ -18,6 +18,7 @@ import EventDetails from "./Components/EventDetails/EventDetails.jsx";
 import JoinedEvents from "./Components/JoinedEvents/JoinedEvents.jsx";
 import MyEvents from "./Components/MyEvents/MyEvents.jsx";
 import UpdateEvent from "./Components/UpdateEvent/UpdateEvent.jsx";
+import Error from "./Components/Error/Error.jsx";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,11 @@ const router = createBrowserRouter([
             <UpdateEvent></UpdateEvent>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "*",
+        element: <Error></Error>,
+        // handle: { title: "404 | GameHub" },
       },
     ],
   },
