@@ -1,17 +1,38 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../Navbar/Navbar';
-import { Outlet } from 'react-router';
+import { Outlet, useMatches, useNavigation } from 'react-router';
 import Footer from '../Footer/Footer';
 
 const Root = () => {
-    return (
-        <div>
-            <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
+  const matches = useMatches();
+  const navigation = useNavigation();
+
+  // Derive loading state directly
+  const showLoading = navigation.state === 'loading';
+
+  // Tab title logic
+  useEffect(() => {
+    const lastMatch = matches.at(-1);
+    const routeTitle = lastMatch?.handle?.title;
+    document.title = routeTitle || '';
+  }, [matches]);
+
+  return (
+    <div className="relative">
+      <Navbar />
+
+      {/* Page-to-page loading spinner */}
+      {showLoading && (
+        <div className="fixed top-0 left-0 w-full flex justify-center items-center bg-white/80 backdrop-blur-sm py-3 z-50 transition-opacity duration-300">
+          <span className="loading loading-spinner text-green-500 mr-2"></span>
+          <span className="text-green-800 font-medium">Loading...</span>
         </div>
-    );
+      )}
+
+      <Outlet />
+      <Footer />
+    </div>
+  );
 };
 
 export default Root;

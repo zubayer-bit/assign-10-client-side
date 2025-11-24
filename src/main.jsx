@@ -20,6 +20,9 @@ import MyEvents from "./Components/MyEvents/MyEvents.jsx";
 import UpdateEvent from "./Components/UpdateEvent/UpdateEvent.jsx";
 import Error from "./Components/Error/Error.jsx";
 
+const delayLoader = () =>
+  new Promise((resolve) => setTimeout(() => resolve(null), 300));
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,63 +39,66 @@ const router = createBrowserRouter([
           return { featureData, imageTreePlant };
         },
         Component: Home,
+        handle: { title: "Home - Tree Plantation" },
       },
-      { path: "/login", element: <Login></Login> },
-      { path: "/register", element: <Registration></Registration> },
-      { path: "/about", element: <AboutCard></AboutCard> },
+      { path: "/login", element: <Login />, loader: delayLoader, handle: { title: "Login - Tree Plantation" } },
+      { path: "/register", element: <Registration />, loader: delayLoader, handle: { title: "Register - Tree Plantation" } },
+      { path: "/about", element: <AboutCard />, loader: delayLoader, handle: { title: "About - Tree Plantation" } },
 
       {
         path: "/createEvents",
         element: (
           <PrivateRoute>
-            <CreateEvent></CreateEvent>
+            <CreateEvent />
           </PrivateRoute>
         ),
+        loader: delayLoader,
+        handle: { title: "Create Event - Tree Plantation" },
       },
 
-      // create event page
-      { path: "/upcoming-events", element: <UpcomingEvents></UpcomingEvents> },
+      { path: "/upcoming-events", element: <UpcomingEvents />, loader: delayLoader, handle: { title: "Upcoming Events - Tree Plantation" } },
 
-      //events details page:
-      { path: "/eventsDetails/:id", element: <EventDetails></EventDetails> },
+      { path: "/eventsDetails/:id", element: <EventDetails />, loader: delayLoader, handle: { title: "Event Details - Tree Plantation" } },
 
-      //joined event page:
       {
         path: "/joined-events-page",
         element: (
           <PrivateRoute>
-            <JoinedEvents></JoinedEvents>
+            <JoinedEvents />
           </PrivateRoute>
         ),
+        loader: delayLoader,
+        handle: { title: "Joined Events - Tree Plantation" },
       },
 
-      //only login-user ar personal-joined events show hobe ai component aa:
       {
         path: "/user-manage-events",
         element: (
           <PrivateRoute>
-            <MyEvents></MyEvents>
+            <MyEvents />
           </PrivateRoute>
         ),
+        loader: delayLoader,
+        handle: { title: "My Events - Tree Plantation" },
       },
 
-      //manage page aa  "update-event" button a click korle ai component a jabe:
       {
         path: "/update-event/:id",
         element: (
           <PrivateRoute>
-            <UpdateEvent></UpdateEvent>
+            <UpdateEvent />
           </PrivateRoute>
         ),
+        loader: delayLoader,
+        handle: { title: "Update Event - Tree Plantation" },
       },
-      {
-        path: "*",
-        element: <Error></Error>,
-        // handle: { title: "404 | GameHub" },
-      },
+
+      { path: "*", element: <Error />, loader: delayLoader, handle: { title: "404 - Page Not Found" } },
     ],
   },
 ]);
+
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
